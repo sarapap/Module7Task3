@@ -3,6 +3,7 @@ package dao;
 import entity.Currency;
 import datasource.MariaDbJpaConnection;
 import jakarta.persistence.EntityManager;
+import java.util.List;
 
 public class CurrencyDao {
     public void persist(Currency currency) {
@@ -12,23 +13,17 @@ public class CurrencyDao {
         em.getTransaction().commit();
     }
 
-    public Currency find(int id) {
+    public List<Currency> getCurrencies() {
         EntityManager em = MariaDbJpaConnection.getInstance();
-        Currency currency = em.find(Currency.class, id);
-        return currency;
+        return em.createQuery("SELECT r FROM Currency r", Currency.class).getResultList();
     }
 
-    public void update(Currency currency) {
+    public double getExchangeRate(String abbreviation) {
         EntityManager em = MariaDbJpaConnection.getInstance();
-        em.getTransaction().begin();
-        em.merge(currency);
-        em.getTransaction().commit();
+        Currency currency = em.createQuery("SELECT r FROM Currency r WHERE r.abbreviation = :abbreviation", Currency.class)
+                .setParameter("abbreviation", abbreviation)
+                .getSingleResult();
+        return currency.getRate();
+    }
     }
 
-    public void delete(Currency currency) {
-        EntityManager em = MariaDbJpaConnection.getInstance();
-        em.getTransaction().begin();
-        em.remove(currency);
-        em.getTransaction().commit();
-    }
-}

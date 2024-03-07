@@ -45,4 +45,9 @@ public class Currency {
         return rate;
     }
 
+    @Override
+    public String toString() {
+        return abbreviation + " - " + currencyName;
+    }
+
 }
