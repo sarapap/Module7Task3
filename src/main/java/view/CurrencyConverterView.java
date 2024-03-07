@@ -33,9 +33,15 @@ public class CurrencyConverterView extends Application {
                 "Then select currencies to convert from and to. " +
                 "Finally, click the convert button.");
 
-        List<Currency> currencies = controller.getCurrencies();
-        from.getItems().addAll(currencies);
-        to.getItems().addAll(currencies);
+        List<Currency> currencies;
+        try {
+            currencies = controller.getCurrencies();
+            from.getItems().addAll(currencies);
+            to.getItems().addAll(currencies);
+        } catch (Exception e) {
+            showErrorDialog("Error", "Failed to get currencies from database.");
+            return;
+        }
 
         addCurrencyButton.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
@@ -79,8 +85,8 @@ public class CurrencyConverterView extends Application {
                         double rate;
                         try {
                             rate = Double.parseDouble(rateText);
-                            if (rate < 0) {
-                                showError("Rate cannot be negative.");
+                            if (rate <= 0) {
+                                showError("Rate must be a positive number.");
                                 return;
                             }
                         } catch (NumberFormatException e) {
@@ -149,5 +155,13 @@ public class CurrencyConverterView extends Application {
         Scene scene = new Scene(vbox);
         stage.setScene(scene);
         stage.show();
+    }
+
+    private void showErrorDialog(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
