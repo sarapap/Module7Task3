@@ -1,7 +1,9 @@
 package view;
 
 import application.CurrencyAppController;
+import dao.TransactionDao;
 import entity.Currency;
+import entity.Transaction;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -77,10 +79,6 @@ public class CurrencyConverterView extends Application {
                             return;
                         }
 
-                        if (!abbreviation.matches("[a-zA-Z]+") || !name.matches("[a-zA-Z]+")) {
-                            showError("Must contain letters only.");
-                            return;
-                        }
 
                         double rate;
                         try {
@@ -128,6 +126,11 @@ public class CurrencyConverterView extends Application {
                     Currency toCurrency = to.getValue();
                     double converted = controller.convert(howMuch, fromCurrency, toCurrency);
                     result.setText(String.format("%.2f", converted));
+
+                    Transaction transaction = new Transaction(howMuch, fromCurrency.getAbbreviation(), toCurrency.getAbbreviation());
+                    TransactionDao transactionDao = new TransactionDao();
+                    transactionDao.persist(transaction);
+
                 } catch (NumberFormatException e) {
                     result.setText("Invalid input");
                 } catch (NullPointerException e) {
