@@ -2,7 +2,6 @@ package dao;
 
 import entity.Transaction;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityTransaction;
 
 public class TransactionDao {
     public void persist(Transaction transaction) {

@@ -37,10 +37,6 @@ public class Currency {
         return currencyName;
     }
 
-    public void setCurrencyName(String currencyName) {
-        this.currencyName = currencyName;
-    }
-
     public double getRate() {
         return rate;
     }

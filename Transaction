@@ -1,0 +1,2 @@
+drop table if exists CurrencyObjects;
+drop table if exists Transaction;
