@@ -29,9 +29,12 @@ public class CurrencyConverterView extends Application {
         Button addCurrencyButton = new Button("Add Currency");
         Label resultLabel = new Label("Result: ");
         TextField result = new TextField();
-        Text instructions = new Text("First enter the amount to convert. " +
-                "Then select currencies to convert from and to. " +
-                "Finally, click the convert button.");
+        Text instructions = new Text("First enter the amount to convert. \n" +
+                "Then select currencies to convert from and to. \n" +
+                "Finally, click the convert button. \n" +
+        "\nIf you want to add a new currency, click the add currency button. " +
+        "\nAbbreviation and name must contain letters only. Rate must be a positive number.");
+        instructions.setWrappingWidth(500);
 
         List<Currency> currencies;
         try {
