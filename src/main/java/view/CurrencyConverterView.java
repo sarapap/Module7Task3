@@ -81,7 +81,7 @@ public class CurrencyConverterView extends Application {
                         }
 
                         if (!abbreviation.matches("[a-zA-Z]+") || !name.matches("[a-zA-Z]+")) {
-                            showError("Must contain letters only.");
+                            showError("The abbreviation and name must contain letters only.");
                             return;
                         }
 
